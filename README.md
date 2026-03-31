@@ -14,15 +14,22 @@ Built around the idea that the most powerful thing you can do is **know what you
 
 - **Flip cards** — individual or all at once. Face-down cards are private; only you can see them unless you choose to reveal.
 - **Shuffle** — randomise your deck for a fresh perspective.
-- **Add & remove cards** — add new plans, connections, opportunities. Remove (play) a card when it's been used, failed, or the door has closed.
+- **Add & remove cards** — add new plans, connections, opportunities. Archive a card when it's been played, failed, or the door has closed.
 - **Card statuses:**
   - **Reserved** — in your hand, face-down. Not in play yet.
   - **Playing** — actively in play. Card sticks up out of the deck so you know what you're focused on.
-  - **Played** — used, closed, or expired. Archived, not deleted.
-- **Trump cards** — mark your strongest plays. Save them. Deploy them when the moment is right.
+  - **Played** — used, closed, or expired. Archived with a journal note, never hard-deleted.
+- **Card types:** Standard, Trump, Last Ditch, Wild, Ace, Resource
+- **Ace card** — your secret advantage. Hidden from everyone. Always.
+- **Trump cards** — your strongest plays. Save them. Deploy them when the moment is right.
+- **Resources** — things you have access to that power your other cards. LinkedIn, GitHub, certifications, networks.
 - **Last ditch card** — your final play if options are running low.
-- **Randomised quotes** — card metaphor quotes fade in and out across the UI as a reminder of the mindset.
-- **Share your deck** — share a link with others. You control what they see. Flipped (face-down) cards stay hidden unless you're the admin.
+- **Wild card** — an unexpected arrival. A new connection or opportunity that just showed up.
+- **Deck stats** — see how many cards you have in play, reserved, and remaining. Know your hand strength.
+- **Expiry dates** — set deadlines on cards. Get warned when time is running out.
+- **Randomised quotes** — card metaphor quotes fade in and out across the UI.
+- **Share your deck** — share a link with others. You control what they see. Face-down and Ace cards stay hidden unless you choose to reveal.
+- **Installable** — works on desktop and phone. Add to home screen like a native app.
 
 ---
 
@@ -53,9 +60,16 @@ The point isn't to have a perfect hand. It's to **know what you're holding and p
 
 ## Tech Stack
 
-- HTML / CSS / JavaScript — no framework, no dependencies
-- Local storage for persistence
-- Shareable via URL with access control
+| Layer | Choice |
+|-------|--------|
+| Framework | React 18 + Vite + TypeScript |
+| Styling & animations | Pure CSS (3D card flips, shuffle, protrude effect) |
+| Drag & drop | `@dnd-kit/core` |
+| Data | `localStorage` |
+| Installable | PWA — `manifest.json` + `service-worker.js` |
+| Sharing | URL with base64-encoded deck state |
+
+No backend. No login. Runs entirely in the browser — installable on any device.
 
 ---
 
