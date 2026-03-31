@@ -27,7 +27,7 @@ A personal, visual card deck for tracking plans, opportunities, connections, res
 
 ## Card Types
 
-Cards are grouped by type using suit as a visual language — not rigid categories, just flavour:
+Cards are grouped by suit as a visual language — not rigid categories, just flavour:
 
 | Suit | Type | Examples |
 |------|------|---------|
@@ -36,17 +36,17 @@ Cards are grouped by type using suit as a visual language — not rigid categori
 | ♦ Diamonds | Resources & Assets | LinkedIn, GitHub portfolio, Brunel career services, tools, subscriptions |
 | ♣ Clubs | Plans & Strategies | Job applications, side projects, networking plays, routes into tech |
 
-Suit is optional and decorative — every card is still a Plan/Opportunity at its core.
+Suit is optional and decorative — every card is a Plan/Opportunity at its core.
 
 ---
 
 ## Functional Requirements
 
 ### Cards
-- [ ] Each card has: Title, Notes/description, Status, Card Type (Ace / Trump / Last Ditch / Wild / Standard), Suit (optional), Expiry date (optional)
-- [ ] Cards have a front (your content) and a back (plain card design)
+- [ ] Each card has: Title, Notes/description, Status, Card Type (Ace / Trump / Last Ditch / Wild / Resource / Standard), Suit (optional), Expiry date (optional)
+- [ ] Cards have a front (content) and a back (plain card design)
 - [ ] Cards can be added, edited, and archived
-- [ ] Archiving a card moves it to "Played" — prompts for a brief journal note (what happened, what you learned)
+- [ ] Archiving moves a card to "Played" — prompts for a brief journal note (what happened, what you learned)
 - [ ] No hard-delete — played cards are always recoverable
 
 ### Card Statuses
@@ -55,48 +55,48 @@ Suit is optional and decorative — every card is still a Plan/Opportunity at it
 - [ ] **Played** — used, closed, or expired. Moved to archive with journal entry.
 
 ### Special Card Types
-- [ ] **Ace** — completely hidden card. Never visible to shared viewers, ever. Admin-only. The secret advantage. Visually distinct (gold trim or similar).
+- [ ] **Ace** — completely hidden. Never visible to shared viewers. Admin-only. Visually distinct (gold trim/glow).
 - [ ] **Trump Card** — high-value play. Saved until the right moment. Marked visually.
-- [ ] **Last Ditch Card** — final resort. Visually flagged (red border or similar). Ideally never needed.
-- [ ] **Wild Card** — unexpected new arrival. Marked differently to show it just showed up.
-- [ ] **Resource** — something you have, not something you're doing. Tools, access, platforms, credentials that support your other cards.
+- [ ] **Last Ditch Card** — final resort. Red border. Ideally never needed.
+- [ ] **Wild Card** — unexpected new arrival. Distinct styling to show it just showed up.
+- [ ] **Resource** — something you have, not something you're doing. Supports other cards.
 
 ### Resources Section
-- [ ] Dedicated section for Resource cards — things in your arsenal that aren't plans but enable plans
-- [ ] Resources are always "available" unless archived (e.g. a subscription you cancelled, a platform you lost access to)
-- [ ] Examples: LinkedIn profile, GitHub portfolio, university network, course access, industry contacts list
+- [ ] Dedicated section for Resource cards — things in your arsenal that enable plans
+- [ ] Resources are "available" unless archived
+- [ ] Examples: LinkedIn, GitHub portfolio, university network, course access, industry contacts
 
 ### Interactions
 - [ ] Flip a single card (front/back toggle with animation)
 - [ ] Flip all cards at once
-- [ ] Shuffle the deck (randomise card order with animation)
-- [ ] Drag to reorder manually
-- [ ] Mark card as Trump / Last Ditch / Wild / Ace
-- [ ] Move card between statuses
-- [ ] "Show Your Hand" mode — reveal your full deck to a trusted person (e.g. mentor, recruiter) in one action. Temporary reveal, not permanent.
+- [ ] Shuffle the deck (randomise order with animation)
+- [ ] Drag to reorder manually (`@dnd-kit/core`)
+- [ ] Mark card as any type (Ace / Trump / Last Ditch / Wild / Resource)
+- [ ] Move card between statuses (Reserved → Playing → Played)
+- [ ] "Show Your Hand" mode — temporary full reveal to a trusted viewer
 
 ### Expiry & Deadlines
 - [ ] Optional expiry date on any card
-- [ ] Cards approaching expiry are visually highlighted (e.g. corner turns red)
+- [ ] Cards approaching expiry visually highlighted (corner colour change)
 - [ ] Expired cards prompt the user to archive them
 
 ### Deck Stats
-- [ ] Summary panel: how many cards Reserved / Playing / Played
-- [ ] Count of Trump cards remaining
-- [ ] Visual "hand strength" indicator — qualitative signal of how strong your deck is right now
-- [ ] Flag if Last Ditch is your only card left (you're running low)
+- [ ] Summary panel: Reserved / Playing / Played counts
+- [ ] Trump cards remaining
+- [ ] Visual "hand strength" indicator
+- [ ] Warning flag if Last Ditch is the only card left
 
 ### Visibility & Sharing
 - [ ] Deck owner is admin — sees all cards regardless of flip state
-- [ ] Share a public link with others — read-only
-- [ ] Face-down and Ace cards are always hidden from non-admin viewers
+- [ ] Share a public read-only link
+- [ ] Face-down and Ace cards always hidden from non-admin viewers
 - [ ] Admin can reveal individual cards to shared viewers
 - [ ] "Show Your Hand" — temporary full reveal to a trusted viewer
 - [ ] No login required for viewers
+- [ ] Deck state encoded as base64 in the URL — no backend needed
 
 ### Quotes
-- [ ] Rotating quotes fade in and out across the UI
-- [ ] Subtle, not distracting — background flavour
+- [ ] Rotating quotes fade in and out across the UI — background flavour, not intrusive
 - [ ] Starting quotes:
   - "We cannot change the cards we are dealt, just how we play the game." — Randy Pausch
   - "Life is not a matter of holding good cards, but sometimes, playing a poor hand well." — Jack London
@@ -113,23 +113,35 @@ Suit is optional and decorative — every card is still a Plan/Opportunity at it
 - [ ] Clean white background — minimal, sharp
 - [ ] Realistic playing card proportions and aesthetic (rounded corners, shadow, suits)
 - [ ] "Playing" cards visually protrude upward from the deck
-- [ ] Ace card has a distinct visual treatment — gold, subtle glow, or different back design
-- [ ] Smooth 3D flip animation
+- [ ] Ace card has distinct visual treatment — gold trim, subtle glow
+- [ ] Smooth CSS 3D flip animation
 - [ ] Shuffle animation
-- [ ] Quote fades in/out — background layer, doesn't interrupt interaction
-- [ ] Expiry warning visible on card face (corner colour change)
+- [ ] Quote fades in/out — background layer, never interrupts interaction
+- [ ] Expiry warning on card face (corner colour change)
 - [ ] Mobile responsive
+- [ ] Installable on phone (Add to Home Screen) and desktop
 - [ ] Dark mode (future)
 
 ---
 
 ## Technical Requirements
 
-- [ ] Pure HTML / CSS / JavaScript — no framework, no build step
-- [ ] Data persisted in `localStorage`
-- [ ] Shareable deck via URL
-- [ ] No backend required for MVP
-- [ ] Admin determined by local session
+| Layer | Choice | Notes |
+|-------|--------|-------|
+| Framework | React 18 + Vite + TypeScript | Component-based, fast dev server, type safety |
+| Styling | Pure CSS | Hand-crafted — card flip (CSS 3D transforms), shuffle, protrude animations |
+| Drag & drop | `@dnd-kit/core` | React-native DnD — cleaner than SortableJS in a React context |
+| Data | `localStorage` | No backend needed |
+| Sharing | Base64-encoded URL state | Deck shareable via link, no server |
+| Installable | PWA — `manifest.json` + `service-worker.js` | Add to home screen on iOS/Android, install on desktop |
+| Admin auth | `localStorage` flag | You created it on this device = you're admin |
+
+### PWA Requirements
+- [ ] `manifest.json` — app name, icons, display mode (standalone), theme colour
+- [ ] `service-worker.js` — caches assets for offline use
+- [ ] Works fully offline after first load
+- [ ] Installable via "Add to Home Screen" on iOS and Android
+- [ ] Installable as desktop app via browser prompt
 
 ---
 
@@ -139,6 +151,6 @@ Suit is optional and decorative — every card is still a Plan/Opportunity at it
 - [ ] Export deck as PDF / image
 - [ ] Reminder/nudge — "You haven't played this card in 30 days"
 - [ ] Multiple decks
-- [ ] Collaboration — trusted person can add cards to your deck
+- [ ] Collaboration — trusted person can suggest cards to your deck
 - [ ] Deck history — timeline of what you played and when
 - [ ] AI suggestion — based on your deck, suggest which card to play next
