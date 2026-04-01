@@ -1,0 +1,63 @@
+.deck-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 32px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ─── Section ───────────────────────────────────────────────────────────── */
+
+.deck-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.deck-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ─── Card row ──────────────────────────────────────────────────────────── */
+
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end; /* playing cards protrude upward naturally */
+  padding-bottom: 8px;
+}
+
+/* ─── Playing section — extra bottom room for protruding cards ───────────── */
+
+.deck-section--playing .card-row {
+  padding-top: 28px; /* leave room above for the protrusion */
+}
+
+/* ─── Played section — desaturated treatment ─────────────────────────────── */
+
+.deck-section--played {
+  opacity: 0.75;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .deck-layout {
+    padding: 20px 16px;
+    gap: 36px;
+  }
+
+  .card-row {
+    gap: 12px;
+  }
+}

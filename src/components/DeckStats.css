@@ -1,0 +1,103 @@
+.deck-stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 24px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.deck-stats.last-ditch-warning {
+  border-bottom-color: var(--last-ditch-red);
+  background: #fff8f8;
+}
+
+/* ─── Individual stat ───────────────────────────────────────────────────── */
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+}
+
+.stat-value.trump {
+  color: var(--trump-gold);
+}
+
+.stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--border);
+}
+
+/* ─── Hand strength bar ─────────────────────────────────────────────────── */
+
+.hand-strength {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+.hand-strength-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.hand-strength-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.hand-strength-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* ─── Last ditch flag ───────────────────────────────────────────────────── */
+
+.last-ditch-flag {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--last-ditch-red);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-left: auto;
+}
+
+@media (max-width: 600px) {
+  .deck-stats {
+    padding: 10px 16px;
+    gap: 16px;
+  }
+
+  .hand-strength {
+    max-width: 120px;
+  }
+}

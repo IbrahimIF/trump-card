@@ -1,0 +1,33 @@
+.quote-display {
+  text-align: center;
+  padding: 16px 24px;
+  max-width: 600px;
+  margin: 0 auto;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.quote-visible {
+  opacity: 0.55;
+  transform: translateY(0);
+}
+
+.quote-hidden {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.quote-text {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+  line-height: 1.6;
+}
+
+.quote-author {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
