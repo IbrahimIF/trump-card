@@ -1,4 +1,4 @@
-import { DeckStats as Stats } from '../types/card';
+import type { DeckStats as Stats } from '../types/card';
 import './DeckStats.css';
 
 interface DeckStatsProps {

@@ -1,3 +1,23 @@
+/* ─── Wrapper (positions the actions popover) ───────────────────────────── */
+
+.playing-card-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.card-actions-popover {
+  position: absolute;
+  top: 8px;
+  left: calc(100% + 8px);
+  z-index: 20;
+}
+
+.card-actions-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 19;
+}
+
 /* ─── Card shell ─────────────────────────────────────────────────────────── */
 
 .playing-card {

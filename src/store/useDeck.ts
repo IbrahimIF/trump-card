@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, CardStatus, DeckStats } from '../types/card';
+import type { Card, CardStatus, DeckStats } from '../types/card';
 import { SEED_CARDS } from '../data/seedCards';
 
 const STORAGE_KEY = 'trump-card-deck';

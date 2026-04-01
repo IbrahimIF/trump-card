@@ -1,0 +1,70 @@
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  min-width: 120px;
+}
+
+.card-action-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  border-radius: 6px;
+  color: var(--text);
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+
+.card-action-btn:hover {
+  background: var(--bg);
+}
+
+.card-action-btn--archive {
+  color: #27ae60;
+}
+
+.card-action-btn--danger {
+  color: var(--last-ditch-red);
+}
+
+/* ─── Archive prompt (inline) ───────────────────────────────────────────── */
+
+.card-archive-prompt {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  width: 200px;
+}
+
+.archive-prompt-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.archive-prompt-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.btn-sm {
+  font-size: 11px;
+  padding: 5px 10px;
+}

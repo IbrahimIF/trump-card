@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Card } from '../types/card';
+import type { Card, CardStatus } from '../types/card';
 import { PlayingCard } from './PlayingCard';
 import './Deck.css';
 
@@ -7,9 +7,11 @@ interface DeckProps {
   cards: Card[];
   isAdmin?: boolean;
   onFlip?: (id: string) => void;
+  onStatusChange?: (id: string, status: CardStatus, note?: string) => void;
+  onRemove?: (id: string) => void;
 }
 
-export function Deck({ cards, isAdmin = true, onFlip }: DeckProps) {
+export function Deck({ cards, isAdmin = true, onFlip, onStatusChange, onRemove }: DeckProps) {
   const playing = useMemo(() => cards.filter(c => c.status === 'playing'), [cards]);
   const reserved = useMemo(() => cards.filter(c => c.status === 'reserved'), [cards]);
   const played = useMemo(() => cards.filter(c => c.status === 'played'), [cards]);
@@ -21,7 +23,14 @@ export function Deck({ cards, isAdmin = true, onFlip }: DeckProps) {
           <h2 className="deck-section-label">In Play</h2>
           <div className="card-row">
             {playing.map(card => (
-              <PlayingCard key={card.id} card={card} isAdmin={isAdmin} onFlip={onFlip} />
+              <PlayingCard
+                key={card.id}
+                card={card}
+                isAdmin={isAdmin}
+                onFlip={onFlip}
+                onStatusChange={onStatusChange}
+                onRemove={onRemove}
+              />
             ))}
           </div>
         </section>
@@ -32,7 +41,14 @@ export function Deck({ cards, isAdmin = true, onFlip }: DeckProps) {
           <h2 className="deck-section-label">In Hand</h2>
           <div className="card-row">
             {reserved.map(card => (
-              <PlayingCard key={card.id} card={card} isAdmin={isAdmin} onFlip={onFlip} />
+              <PlayingCard
+                key={card.id}
+                card={card}
+                isAdmin={isAdmin}
+                onFlip={onFlip}
+                onStatusChange={onStatusChange}
+                onRemove={onRemove}
+              />
             ))}
           </div>
         </section>
@@ -43,7 +59,14 @@ export function Deck({ cards, isAdmin = true, onFlip }: DeckProps) {
           <h2 className="deck-section-label">Played</h2>
           <div className="card-row">
             {played.map(card => (
-              <PlayingCard key={card.id} card={card} isAdmin={isAdmin} onFlip={onFlip} />
+              <PlayingCard
+                key={card.id}
+                card={card}
+                isAdmin={isAdmin}
+                onFlip={onFlip}
+                onStatusChange={onStatusChange}
+                onRemove={onRemove}
+              />
             ))}
           </div>
         </section>
