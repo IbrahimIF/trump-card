@@ -38,8 +38,8 @@ function App() {
           <div className="app-actions">
             {!shared && (
               <>
-                <button className="btn btn-ghost" onClick={() => deck.flipAll(false)}>Show All</button>
-                <button className="btn btn-ghost" onClick={() => deck.flipAll(true)}>Hide All</button>
+                <button className="btn btn-ghost" onClick={() => deck.flipAll(true)}>Show All</button>
+                <button className="btn btn-ghost" onClick={() => deck.flipAll(false)}>Hide All</button>
                 <button className="btn btn-ghost" onClick={deck.shuffle}>Shuffle</button>
                 <ShareButton cards={deck.cards} />
                 <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>+ New Card</button>
