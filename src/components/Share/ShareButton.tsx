@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { Card } from '../types/card';
-import { encodeDeckToUrl } from '../utils/sharing';
+import type { Card } from '../../types/card';
+import { encodeDeckToUrl } from '../../utils/sharing';
 
 interface ShareButtonProps {
   cards: Card[];

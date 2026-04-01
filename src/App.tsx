@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDeck } from './store/useDeck';
-import { Deck } from './components/Deck';
-import { DeckStats } from './components/DeckStats';
-import { QuoteDisplay } from './components/QuoteDisplay';
-import { AddCardModal } from './components/AddCardModal';
-import { ShareButton } from './components/ShareButton';
+import { Deck } from './components/Deck/Deck';
+import { DeckStats } from './components/DeckStats/DeckStats';
+import { QuoteDisplay } from './components/Quote/QuoteDisplay';
+import { AddCardModal } from './components/AddCardModal/AddCardModal';
+import { ShareButton } from './components/Share/ShareButton';
 import { decodeDeckFromUrl, isSharedView } from './utils/sharing';
 import './App.css';
 

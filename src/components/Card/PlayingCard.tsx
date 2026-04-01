@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import type { Card, CardSuit, CardType, CardStatus } from '../types/card';
-import { CardActions } from './CardActions';
+import type { Card, CardSuit, CardType, CardStatus } from '../../types/card';
+import { CardActions } from '../Actions/CardActions';
 import './PlayingCard.css';
 
 interface PlayingCardProps {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { QUOTES } from '../data/quotes';
+import { QUOTES } from '../../data/quotes';
 import './QuoteDisplay.css';
 
 const INTERVAL_MS = 8000;

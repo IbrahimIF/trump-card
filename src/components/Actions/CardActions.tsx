@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Card, CardStatus } from '../types/card';
+import type { Card, CardStatus } from '../../types/card';
 import './CardActions.css';
 
 interface CardActionsProps {

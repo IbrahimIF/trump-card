@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Card, CardType, CardSuit, CardStatus } from '../types/card';
+import type { Card, CardType, CardSuit, CardStatus } from '../../types/card';
 import './AddCardModal.css';
 
 interface AddCardModalProps {

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import type { Card, CardStatus } from '../types/card';
-import { PlayingCard } from './PlayingCard';
+import type { Card, CardStatus } from '../../types/card';
+import { PlayingCard } from '../Card/PlayingCard';
 import './Deck.css';
 
 interface DeckProps {
