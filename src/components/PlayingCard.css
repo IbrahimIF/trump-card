@@ -1,0 +1,257 @@
+/* ─── Card shell ─────────────────────────────────────────────────────────── */
+
+.playing-card {
+  --card-w: 180px;
+  --card-h: 260px;
+  --card-radius: 12px;
+  --transition-flip: 0.5s ease;
+
+  width: var(--card-w);
+  height: var(--card-h);
+  perspective: 1000px;
+  cursor: pointer;
+  flex-shrink: 0;
+  outline: none;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.playing-card:hover {
+  transform: translateY(-6px);
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+}
+
+.playing-card:focus-visible {
+  outline: 2px solid var(--trump-gold);
+  outline-offset: 4px;
+  border-radius: var(--card-radius);
+}
+
+/* Playing cards protrude upward */
+.playing-card.status-playing {
+  transform: translateY(-20px);
+}
+.playing-card.status-playing:hover {
+  transform: translateY(-28px);
+}
+
+/* Played cards are dimmed */
+.playing-card.status-played {
+  opacity: 0.45;
+  filter: grayscale(0.4);
+}
+
+/* ─── 3D flip mechanics ─────────────────────────────────────────────────── */
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--transition-flip);
+  border-radius: var(--card-radius);
+}
+
+.playing-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* ─── Shared face styles ────────────────────────────────────────────────── */
+
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* ─── Card back ─────────────────────────────────────────────────────────── */
+
+.card-back {
+  background: #1a2a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-back-pattern {
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 2px,
+      transparent 2px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 2px,
+      transparent 2px,
+      transparent 10px
+    );
+}
+
+/* ─── Card front ────────────────────────────────────────────────────────── */
+
+.card-front {
+  background: var(--bg-card);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  position: relative;
+}
+
+/* ─── Corners ───────────────────────────────────────────────────────────── */
+
+.card-corner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.card-corner.top-left {
+  align-self: flex-start;
+}
+
+.card-corner.bottom-right {
+  align-self: flex-end;
+  transform: rotate(180deg);
+  margin-top: auto;
+}
+
+.corner-suit {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.red .corner-suit,
+.red .card-body .suit-large {
+  color: var(--suit-hearts);
+}
+
+.black .corner-suit {
+  color: var(--suit-spades);
+}
+
+/* ─── Card body ─────────────────────────────────────────────────────────── */
+
+.card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6px 4px;
+  gap: 6px;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.card-notes {
+  font-size: 10px;
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-expiry {
+  font-size: 9px;
+  color: #e67e22;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+/* ─── Type badge ────────────────────────────────────────────────────────── */
+
+.card-type-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 5px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* Trump */
+.type-trump .card-type-badge {
+  background: var(--trump-gold);
+  color: #fff;
+}
+
+.type-trump .card-front {
+  background: var(--trump-gold-bg);
+  border: 2px solid var(--trump-gold);
+}
+
+/* Ace */
+.type-ace .card-type-badge {
+  background: var(--ace-gold);
+  color: #fff;
+}
+
+.type-ace .card-front {
+  background: #fffff8;
+  border: 2px solid var(--ace-gold);
+  box-shadow: 0 0 0 1px var(--ace-gold), 0 4px 16px rgba(212, 175, 55, 0.3);
+}
+
+/* Last ditch */
+.type-last-ditch .card-type-badge {
+  background: var(--last-ditch-red);
+  color: #fff;
+}
+
+.type-last-ditch .card-front {
+  border: 2px solid var(--last-ditch-red);
+}
+
+/* Wild */
+.type-wild .card-type-badge {
+  background: var(--wild-purple);
+  color: #fff;
+}
+
+/* Resource */
+.type-resource .card-type-badge {
+  background: var(--resource-blue);
+  color: #fff;
+}
+
+/* ─── Status dot ────────────────────────────────────────────────────────── */
+
+.card-status-dot {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.status-reserved .card-status-dot  { background: var(--text-muted); }
+.status-playing  .card-status-dot  { background: #27ae60; }
+.status-played   .card-status-dot  { background: #bdc3c7; }
