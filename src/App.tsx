@@ -4,11 +4,27 @@ import { Deck } from './components/Deck';
 import { DeckStats } from './components/DeckStats';
 import { QuoteDisplay } from './components/QuoteDisplay';
 import { AddCardModal } from './components/AddCardModal';
+import { ShareButton } from './components/ShareButton';
+import { decodeDeckFromUrl, isSharedView } from './utils/sharing';
 import './App.css';
 
+const sharedCards = decodeDeckFromUrl();
+const shared = isSharedView();
+
 function App() {
-  const { cards, stats, addCard, removeCard, setStatus, flipCard, shuffle, flipAll } = useDeck();
+  const deck = useDeck();
   const [showAddModal, setShowAddModal] = useState(false);
+
+  const cards = shared && sharedCards ? sharedCards : deck.cards;
+  const stats = shared && sharedCards
+    ? {
+        reserved: sharedCards.filter(c => c.status === 'reserved').length,
+        playing: sharedCards.filter(c => c.status === 'playing').length,
+        played: 0,
+        trumpRemaining: sharedCards.filter(c => c.type === 'trump').length,
+        hasLastDitchOnly: false,
+      }
+    : deck.stats;
 
   return (
     <div className="app">
@@ -20,10 +36,18 @@ function App() {
             <span className="app-title-suit">♠</span>
           </div>
           <div className="app-actions">
-            <button className="btn btn-ghost" onClick={() => flipAll(false)}>Show All</button>
-            <button className="btn btn-ghost" onClick={() => flipAll(true)}>Hide All</button>
-            <button className="btn btn-ghost" onClick={shuffle}>Shuffle</button>
-            <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>+ New Card</button>
+            {!shared && (
+              <>
+                <button className="btn btn-ghost" onClick={() => deck.flipAll(false)}>Show All</button>
+                <button className="btn btn-ghost" onClick={() => deck.flipAll(true)}>Hide All</button>
+                <button className="btn btn-ghost" onClick={deck.shuffle}>Shuffle</button>
+                <ShareButton cards={deck.cards} />
+                <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>+ New Card</button>
+              </>
+            )}
+            {shared && (
+              <span className="shared-badge">Shared view — read only</span>
+            )}
           </div>
         </div>
         <DeckStats stats={stats} />
@@ -33,16 +57,16 @@ function App() {
       <main className="app-main">
         <Deck
           cards={cards}
-          isAdmin={true}
-          onFlip={flipCard}
-          onStatusChange={setStatus}
-          onRemove={removeCard}
+          isAdmin={!shared}
+          onFlip={!shared ? deck.flipCard : undefined}
+          onStatusChange={!shared ? deck.setStatus : undefined}
+          onRemove={!shared ? deck.removeCard : undefined}
         />
       </main>
 
       {showAddModal && (
         <AddCardModal
-          onAdd={addCard}
+          onAdd={deck.addCard}
           onClose={() => setShowAddModal(false)}
         />
       )}
