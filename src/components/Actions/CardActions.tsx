@@ -17,6 +17,19 @@ export function CardActions({ card, onStatusChange, onRemove }: CardActionsProps
     setShowArchivePrompt(false);
   }
 
+  if (card.type === 'resource') {
+    return (
+      <div className="card-actions">
+        <button
+          className="card-action-btn card-action-btn--danger"
+          onClick={() => onRemove(card.id)}
+        >
+          × Remove
+        </button>
+      </div>
+    );
+  }
+
   if (showArchivePrompt) {
     return (
       <div className="card-archive-prompt">
