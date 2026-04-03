@@ -107,6 +107,9 @@ export function PlayingCard({ card, isAdmin = true, onFlip, onStatusChange, onRe
                   Expires {new Date(card.expiryDate).toLocaleDateString('en-GB')}
                 </span>
               )}
+              {card.status === 'played' && card.playedNote && (
+                <p className="card-played-note">{card.playedNote}</p>
+              )}
             </div>
 
             <div className="card-corner bottom-right">
