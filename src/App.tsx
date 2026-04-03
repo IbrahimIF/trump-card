@@ -14,6 +14,7 @@ const shared = isSharedView();
 function App() {
   const deck = useDeck();
   const [showAddModal, setShowAddModal] = useState(false);
+  const [allFlipped, setAllFlipped] = useState(false);
 
   const cards = shared && sharedCards ? sharedCards : deck.cards;
   const stats = shared && sharedCards
@@ -38,8 +39,7 @@ function App() {
           <div className="app-actions">
             {!shared && (
               <>
-                <button className="btn btn-ghost" onClick={() => deck.flipAll(true)}>Show All</button>
-                <button className="btn btn-ghost" onClick={() => deck.flipAll(false)}>Hide All</button>
+                <button className="btn btn-ghost" onClick={() => { deck.flipAll(!allFlipped); setAllFlipped(f => !f); }}>Flip All</button>
                 <button className="btn btn-ghost" onClick={deck.shuffle}>Shuffle</button>
                 <ShareButton cards={deck.cards} />
                 <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>+ New Card</button>
