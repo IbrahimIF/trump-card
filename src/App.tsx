@@ -15,6 +15,15 @@ function App() {
   const deck = useDeck();
   const [showAddModal, setShowAddModal] = useState(false);
   const [allFlipped, setAllFlipped] = useState(false);
+  const [feltBg, setFeltBg] = useState(() => localStorage.getItem('trump-card-felt') === 'true');
+
+  function toggleFelt() {
+    setFeltBg(prev => {
+      const next = !prev;
+      localStorage.setItem('trump-card-felt', String(next));
+      return next;
+    });
+  }
 
   const cards = shared && sharedCards ? sharedCards : deck.cards;
   const stats = shared && sharedCards
@@ -41,6 +50,7 @@ function App() {
               <>
                 <button className="btn btn-ghost" onClick={() => { deck.flipAll(!allFlipped); setAllFlipped(f => !f); }}>Flip All</button>
                 <button className="btn btn-ghost" onClick={deck.shuffle}>Shuffle</button>
+                <button className="btn btn-ghost" onClick={toggleFelt} title="Toggle background">{feltBg ? '⬜' : '🟩'}</button>
                 <ShareButton cards={deck.cards} />
                 <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>+ New Card</button>
               </>
@@ -54,7 +64,7 @@ function App() {
         <QuoteDisplay />
       </header>
 
-      <main className="app-main">
+      <main className={`app-main${feltBg ? ' app-main--felt' : ''}`}>
         <Deck
           cards={cards}
           isAdmin={!shared}
