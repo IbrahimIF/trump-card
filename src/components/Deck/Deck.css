@@ -8,6 +8,50 @@
   width: 100%;
 }
 
+/* ─── Tabs ──────────────────────────────────────────────────────────────── */
+
+.deck-tabs {
+  display: flex;
+  gap: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.deck-tab {
+  background: none;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.deck-tab:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.deck-tab--active {
+  background: var(--text);
+  color: var(--bg-card);
+}
+
+.deck-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.deck-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin: 0;
+  padding: 24px 0;
+}
+
 /* ─── Section ───────────────────────────────────────────────────────────── */
 
 .deck-section {
