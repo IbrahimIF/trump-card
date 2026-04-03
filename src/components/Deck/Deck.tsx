@@ -64,35 +64,46 @@ export function Deck({ cards, isAdmin = true, onFlip, onStatusChange, onRemove }
         </div>
 
         <div className="deck-sections">
-          {filteredPlaying.length > 0 && (
-            <section className="deck-section deck-section--playing">
-              {activeTab === 'all' && <h2 className="deck-section-label">In Play</h2>}
-              <div className="card-row">
-                {filteredPlaying.map(renderCard)}
-              </div>
-            </section>
-          )}
+          {activeTab === 'all' ? (
+            mainCards.length > 0 ? (
+              <section className="deck-section">
+                <div className="card-row">
+                  {mainCards.map(renderCard)}
+                </div>
+              </section>
+            ) : (
+              <p className="deck-empty">No cards yet. Add one to get started.</p>
+            )
+          ) : (
+            <>
+              {filteredPlaying.length > 0 && (
+                <section className="deck-section deck-section--playing">
+                  <div className="card-row">
+                    {filteredPlaying.map(renderCard)}
+                  </div>
+                </section>
+              )}
 
-          {filteredReserved.length > 0 && (
-            <section className="deck-section deck-section--reserved">
-              {activeTab === 'all' && <h2 className="deck-section-label">In Hand</h2>}
-              <div className="card-row">
-                {filteredReserved.map(renderCard)}
-              </div>
-            </section>
-          )}
+              {filteredReserved.length > 0 && (
+                <section className="deck-section deck-section--reserved">
+                  <div className="card-row">
+                    {filteredReserved.map(renderCard)}
+                  </div>
+                </section>
+              )}
 
-          {filteredPlayed.length > 0 && (
-            <section className="deck-section deck-section--played">
-              {activeTab === 'all' && <h2 className="deck-section-label">Played</h2>}
-              <div className="card-row">
-                {filteredPlayed.map(renderCard)}
-              </div>
-            </section>
-          )}
+              {filteredPlayed.length > 0 && (
+                <section className="deck-section deck-section--played">
+                  <div className="card-row">
+                    {filteredPlayed.map(renderCard)}
+                  </div>
+                </section>
+              )}
 
-          {filteredPlaying.length === 0 && filteredReserved.length === 0 && filteredPlayed.length === 0 && (
-            <p className="deck-empty">No cards in this view.</p>
+              {filteredPlaying.length === 0 && filteredReserved.length === 0 && filteredPlayed.length === 0 && (
+                <p className="deck-empty">No cards in this view.</p>
+              )}
+            </>
           )}
         </div>
       </div>
