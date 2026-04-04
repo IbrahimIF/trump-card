@@ -130,6 +130,41 @@
   opacity: 0.75;
 }
 
+/* ─── All-tab zones (table + hand) ──────────────────────────────────────── */
+
+.deck-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.deck-zone-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Table zone — played cards fanned out */
+.deck-zone--table .card-row--table {
+  padding-top: 20px; /* breathing room for rotated card corners */
+  align-items: center;
+}
+
+/* Hand zone — unplayed cards closer together */
+.card-row--hand {
+  gap: 14px;
+}
+
+/* Playing cards in hand still protrude upward */
+.deck-zone--hand .card-row--hand {
+  padding-top: 28px;
+}
+
 /* ─── Responsive ────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {

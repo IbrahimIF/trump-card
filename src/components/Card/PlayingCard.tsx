@@ -8,6 +8,7 @@ interface PlayingCardProps {
   isAdmin?: boolean;
   isShuffling?: boolean;
   shuffleIndex?: number;
+  rotation?: number;
   onFlip?: (id: string) => void;
   onStatusChange?: (id: string, status: CardStatus, note?: string) => void;
   onRemove?: (id: string) => void;
@@ -29,7 +30,7 @@ const TYPE_LABELS: Record<CardType, string> = {
   resource: 'RESOURCE',
 };
 
-export function PlayingCard({ card, isAdmin = true, isShuffling = false, shuffleIndex = 0, onFlip, onStatusChange, onRemove }: PlayingCardProps) {
+export function PlayingCard({ card, isAdmin = true, isShuffling = false, shuffleIndex = 0, rotation, onFlip, onStatusChange, onRemove }: PlayingCardProps) {
   const isAceHidden = card.type === 'ace' && !isAdmin;
   const [showActions, setShowActions] = useState(false);
   const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -48,6 +49,7 @@ export function PlayingCard({ card, isAdmin = true, isShuffling = false, shuffle
     isRed ? 'red' : 'black',
     showActions ? 'card-actions-open' : '',
     isShuffling ? 'card--shuffling' : '',
+    rotation !== undefined ? 'card--on-table' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -75,7 +77,10 @@ export function PlayingCard({ card, isAdmin = true, isShuffling = false, shuffle
     <div className="playing-card-wrapper">
       <div
         className={classNames}
-        style={isShuffling ? { '--card-idx': shuffleIndex } as React.CSSProperties : undefined}
+        style={{
+          ...(isShuffling ? { '--card-idx': shuffleIndex } as React.CSSProperties : {}),
+          ...(rotation !== undefined ? { '--table-rotation': rotation } as React.CSSProperties : {}),
+        }}
         onClick={handleClick}
         onContextMenu={handleContextMenu}
         onPointerDown={handlePointerDown}

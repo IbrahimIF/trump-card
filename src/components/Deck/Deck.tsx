@@ -21,6 +21,12 @@ const TAB_LABELS: Record<FilterTab, string> = {
   played: 'Played',
 };
 
+const TABLE_ROTATIONS = [-2.5, 1.5, -1, 3, -3, 2, -1.5, 2.5, -0.5, 3.5];
+
+function getTableRotation(index: number): number {
+  return TABLE_ROTATIONS[index % TABLE_ROTATIONS.length];
+}
+
 export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onStatusChange, onRemove }: DeckProps) {
   const [activeTab, setActiveTab] = useState<FilterTab>('all');
 
@@ -29,7 +35,7 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
   const playing = useMemo(() => mainCards.filter(c => c.status === 'playing'), [mainCards]);
   const reserved = useMemo(() => mainCards.filter(c => c.status === 'reserved'), [mainCards]);
   const played = useMemo(() => mainCards.filter(c => c.status === 'played'), [mainCards]);
-  const activeCards = useMemo(() => mainCards.filter(c => c.status !== 'played'), [mainCards]);
+  const handCards = useMemo(() => [...playing, ...reserved], [playing, reserved]);
 
   const filteredPlaying = activeTab === 'playing' ? playing : [];
   const filteredReserved = activeTab === 'reserved' ? reserved : [];
@@ -37,7 +43,7 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
 
   const tabs: FilterTab[] = ['all', 'reserved', 'playing', 'played'];
 
-  function renderCard(card: Card, index: number) {
+  function renderCard(card: Card, index: number, rotation?: number) {
     return (
       <PlayingCard
         key={card.id}
@@ -45,6 +51,7 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
         isAdmin={isAdmin}
         isShuffling={isShuffling}
         shuffleIndex={index}
+        rotation={rotation}
         onFlip={onFlip}
         onStatusChange={onStatusChange}
         onRemove={onRemove}
@@ -69,21 +76,33 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
 
         <div className="deck-sections">
           {activeTab === 'all' ? (
-            activeCards.length > 0 ? (
-              <section className="deck-section">
-                <div className="card-row">
-                  {activeCards.map(renderCard)}
-                </div>
-              </section>
-            ) : (
-              <p className="deck-empty">No active cards yet. Add one to get started.</p>
-            )
+            <>
+              {played.length > 0 && (
+                <section className="deck-zone deck-zone--table">
+                  <h2 className="deck-zone-label">On the Table</h2>
+                  <div className="card-row card-row--table">
+                    {played.map((card, i) => renderCard(card, i, getTableRotation(i)))}
+                  </div>
+                </section>
+              )}
+
+              {handCards.length > 0 ? (
+                <section className="deck-zone deck-zone--hand">
+                  <h2 className="deck-zone-label">In Hand</h2>
+                  <div className="card-row card-row--hand">
+                    {handCards.map((card, i) => renderCard(card, i))}
+                  </div>
+                </section>
+              ) : (
+                !played.length && <p className="deck-empty">No cards yet. Add one to get started.</p>
+              )}
+            </>
           ) : (
             <>
               {filteredPlaying.length > 0 && (
                 <section className="deck-section deck-section--playing">
                   <div className="card-row">
-                    {filteredPlaying.map(renderCard)}
+                    {filteredPlaying.map((card, i) => renderCard(card, i))}
                   </div>
                 </section>
               )}
@@ -91,7 +110,7 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
               {filteredReserved.length > 0 && (
                 <section className="deck-section deck-section--reserved">
                   <div className="card-row">
-                    {filteredReserved.map(renderCard)}
+                    {filteredReserved.map((card, i) => renderCard(card, i))}
                   </div>
                 </section>
               )}
@@ -99,7 +118,7 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
               {filteredPlayed.length > 0 && (
                 <section className="deck-section deck-section--played">
                   <div className="card-row">
-                    {filteredPlayed.map(renderCard)}
+                    {filteredPlayed.map((card, i) => renderCard(card, i))}
                   </div>
                 </section>
               )}
@@ -116,7 +135,7 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
         <aside className="deck-resources">
           <h2 className="deck-section-label">Resources</h2>
           <div className="card-row card-row--compact">
-            {resourceCards.map(renderCard)}
+            {resourceCards.map((card, i) => renderCard(card, i))}
           </div>
         </aside>
       )}

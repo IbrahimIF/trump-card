@@ -269,6 +269,19 @@
   color: #fff;
 }
 
+/* ─── On-table fan effect ───────────────────────────────────────────────── */
+
+.card--on-table {
+  transform: rotate(calc(var(--table-rotation, 0) * 1deg));
+  opacity: 0.8;
+}
+
+.card--on-table:hover {
+  transform: translateY(-8px) rotate(0deg);
+  opacity: 1;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+}
+
 /* ─── Shuffle animation ─────────────────────────────────────────────────── */
 
 @keyframes card-shuffle {
