@@ -49,7 +49,6 @@ export function PlayingCard({ card, isAdmin = true, isShuffling = false, shuffle
     isRed ? 'red' : 'black',
     showActions ? 'card-actions-open' : '',
     isShuffling ? 'card--shuffling' : '',
-    rotation !== undefined ? 'card--on-table' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -74,13 +73,13 @@ export function PlayingCard({ card, isAdmin = true, isShuffling = false, shuffle
   }
 
   return (
-    <div className="playing-card-wrapper">
+    <div
+      className={`playing-card-wrapper${rotation !== undefined ? ' card-wrapper--on-table' : ''}`}
+      style={rotation !== undefined ? { '--table-rotation': rotation } as React.CSSProperties : undefined}
+    >
       <div
         className={classNames}
-        style={{
-          ...(isShuffling ? { '--card-idx': shuffleIndex } as React.CSSProperties : {}),
-          ...(rotation !== undefined ? { '--table-rotation': rotation } as React.CSSProperties : {}),
-        }}
+        style={isShuffling ? { '--card-idx': shuffleIndex } as React.CSSProperties : undefined}
         onClick={handleClick}
         onContextMenu={handleContextMenu}
         onPointerDown={handlePointerDown}

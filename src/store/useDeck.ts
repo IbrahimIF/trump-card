@@ -42,7 +42,10 @@ export function useDeck() {
   }
 
   function flipAll(flipped: boolean) {
-    setCards(prev => prev.map(c => ({ ...c, isFlipped: flipped })));
+    // Only flip main cards (table + hand), not resources
+    setCards(prev => prev.map(c =>
+      c.type !== 'resource' ? { ...c, isFlipped: flipped } : c
+    ));
   }
 
   function setStatus(id: string, status: CardStatus, playedNote?: string) {
@@ -59,11 +62,15 @@ export function useDeck() {
   }
 
   function shuffle() {
+    // Only shuffle reserved (in-hand) non-resource cards
     setCards(prev => {
       const copy = [...prev];
-      for (let i = copy.length - 1; i > 0; i--) {
+      const handIndices = copy
+        .map((c, i) => (c.status === 'reserved' && c.type !== 'resource' ? i : -1))
+        .filter(i => i !== -1);
+      for (let i = handIndices.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
+        [copy[handIndices[i]], copy[handIndices[j]]] = [copy[handIndices[j]], copy[handIndices[i]]];
       }
       return copy;
     });

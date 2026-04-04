@@ -270,16 +270,26 @@
 }
 
 /* ─── On-table fan effect ───────────────────────────────────────────────── */
+/* Rotation is on the WRAPPER, not .playing-card — keeps perspective context
+   undisturbed and prevents the 3D edge-bleed artefact (dark line). */
 
-/* Two-class specificity to beat .playing-card.status-playing transform.
-   No opacity override — status CSS controls that (played = greyed, playing = full). */
-.playing-card.card--on-table {
+.card-wrapper--on-table {
   transform: rotate(calc(var(--table-rotation, 0) * 1deg));
+  transition: transform 0.2s ease;
 }
 
-.playing-card.card--on-table:hover {
+.card-wrapper--on-table:hover {
   transform: translateY(-10px) rotate(0deg);
+}
+
+/* Reveal played (greyed) cards fully on hover */
+.card-wrapper--on-table:hover .playing-card.status-played {
   opacity: 1;
+  filter: grayscale(0) drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+}
+
+/* Drop shadow for in-play cards on hover */
+.card-wrapper--on-table:hover .playing-card.status-playing {
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
 }
 
