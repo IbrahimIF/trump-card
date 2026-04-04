@@ -51,6 +51,7 @@ export function useDeck() {
         ? {
             ...c,
             status,
+            isFlipped: status === 'played' ? false : c.isFlipped,
             ...(status === 'played' ? { playedAt: new Date().toISOString(), playedNote } : {}),
           }
         : c
