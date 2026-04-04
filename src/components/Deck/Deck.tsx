@@ -28,10 +28,11 @@ export function Deck({ cards, isAdmin = true, onFlip, onStatusChange, onRemove }
   const playing = useMemo(() => mainCards.filter(c => c.status === 'playing'), [mainCards]);
   const reserved = useMemo(() => mainCards.filter(c => c.status === 'reserved'), [mainCards]);
   const played = useMemo(() => mainCards.filter(c => c.status === 'played'), [mainCards]);
+  const activeCards = useMemo(() => mainCards.filter(c => c.status !== 'played'), [mainCards]);
 
-  const filteredPlaying = activeTab === 'all' || activeTab === 'playing' ? playing : [];
-  const filteredReserved = activeTab === 'all' || activeTab === 'reserved' ? reserved : [];
-  const filteredPlayed = activeTab === 'all' || activeTab === 'played' ? played : [];
+  const filteredPlaying = activeTab === 'playing' ? playing : [];
+  const filteredReserved = activeTab === 'reserved' ? reserved : [];
+  const filteredPlayed = activeTab === 'played' ? played : [];
 
   const tabs: FilterTab[] = ['all', 'reserved', 'playing', 'played'];
 
@@ -65,14 +66,14 @@ export function Deck({ cards, isAdmin = true, onFlip, onStatusChange, onRemove }
 
         <div className="deck-sections">
           {activeTab === 'all' ? (
-            mainCards.length > 0 ? (
+            activeCards.length > 0 ? (
               <section className="deck-section">
                 <div className="card-row">
-                  {mainCards.map(renderCard)}
+                  {activeCards.map(renderCard)}
                 </div>
               </section>
             ) : (
-              <p className="deck-empty">No cards yet. Add one to get started.</p>
+              <p className="deck-empty">No active cards yet. Add one to get started.</p>
             )
           ) : (
             <>

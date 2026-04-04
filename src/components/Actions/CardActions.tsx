@@ -47,7 +47,7 @@ export function CardActions({ card, onStatusChange, onRemove }: CardActionsProps
             Cancel
           </button>
           <button className="btn btn-primary btn-sm" onClick={handleArchive}>
-            Archive
+            Confirm
           </button>
         </div>
       </div>
@@ -77,7 +77,7 @@ export function CardActions({ card, onStatusChange, onRemove }: CardActionsProps
           className="card-action-btn card-action-btn--archive"
           onClick={() => setShowArchivePrompt(true)}
         >
-          ✓ Archive
+          ✓ Played
         </button>
       )}
       {card.status === 'played' && (
