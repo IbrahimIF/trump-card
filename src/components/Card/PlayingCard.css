@@ -288,3 +288,12 @@
 .status-reserved .card-status-dot  { background: var(--text-muted); }
 .status-playing  .card-status-dot  { background: #27ae60; }
 .status-played   .card-status-dot  { background: #bdc3c7; }
+
+/* ─── Mobile ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .playing-card {
+    --card-w: 140px;
+    --card-h: 200px;
+  }
+}

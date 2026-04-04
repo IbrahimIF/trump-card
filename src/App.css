@@ -116,7 +116,20 @@
 
 @media (max-width: 600px) {
   .app-header-inner {
-    padding: 12px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .app-title {
+    justify-content: center;
+  }
+
+  .app-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
   }
 
   .app-title h1 {
