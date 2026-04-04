@@ -1,8 +1,4 @@
 .deck-layout {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 32px;
   padding: 32px 24px;
   max-width: 1400px;
   margin: 0 auto;
@@ -10,39 +6,9 @@
 }
 
 .deck-main {
-  flex: 1;
-  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 32px;
-}
-
-/* ─── Resource sidebar ──────────────────────────────────────────────────── */
-
-.deck-resources {
-  width: 180px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-top: 4px;
-}
-
-.card-row--compact {
-  flex-direction: column;
-  gap: 8px;
-  flex-wrap: nowrap;
-}
-
-.card-row--compact .playing-card-wrapper {
-  width: 100%;
-  height: 72px;
-}
-
-.card-row--compact .playing-card {
-  width: 100% !important;
-  height: 100% !important;
-  border-radius: 8px;
 }
 
 /* ─── Tabs ──────────────────────────────────────────────────────────────── */
@@ -89,7 +55,7 @@
   padding: 24px 0;
 }
 
-/* ─── Section ───────────────────────────────────────────────────────────── */
+/* ─── Section (filter tabs) ─────────────────────────────────────────────── */
 
 .deck-section {
   display: flex;
@@ -118,7 +84,7 @@
   padding-bottom: 8px;
 }
 
-/* ─── Playing section — extra bottom room for protruding cards ───────────── */
+/* ─── Playing section — extra top room for protruding cards ──────────────── */
 
 .deck-section--playing .card-row {
   padding-top: 28px;
@@ -130,7 +96,7 @@
   opacity: 0.75;
 }
 
-/* ─── All-tab zones (table + hand) ──────────────────────────────────────── */
+/* ─── All-tab zones ──────────────────────────────────────────────────────── */
 
 .deck-zone {
   display: flex;
@@ -149,48 +115,34 @@
   border-bottom: 1px solid var(--border);
 }
 
-/* Table zone — played cards fanned out */
-.deck-zone--table .card-row--table {
-  padding-top: 20px; /* breathing room for rotated card corners */
+/* Table zone — in-play cards fanned out, extra top room for rotation */
+.card-row--table {
+  padding-top: 24px;
   align-items: center;
+  gap: 20px;
 }
 
-/* Hand zone — unplayed cards closer together */
+/* Hand zone — reserved cards, tighter gap */
 .card-row--hand {
   gap: 14px;
 }
 
-/* Playing cards in hand still protrude upward */
-.deck-zone--hand .card-row--hand {
-  padding-top: 28px;
+/* Played zone — desaturated */
+.deck-zone--played {
+  opacity: 0.75;
+}
+
+/* Resources zone — separator from the deck content */
+.deck-zone--resources {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
 }
 
 /* ─── Responsive ────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
   .deck-layout {
-    flex-direction: column;
     padding: 20px 16px;
-    gap: 36px;
-  }
-
-  .deck-resources {
-    width: 100%;
-  }
-
-  .card-row--compact {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .card-row--compact .playing-card-wrapper {
-    width: auto !important;
-    height: auto;
-  }
-
-  .card-row--compact .playing-card {
-    width: var(--card-w) !important;
-    height: var(--card-h) !important;
   }
 
   .card-row {
@@ -201,7 +153,6 @@
 @media (max-width: 480px) {
   .deck-layout {
     padding: 16px 12px;
-    gap: 20px;
   }
 
   .card-row {

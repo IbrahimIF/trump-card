@@ -35,7 +35,6 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
   const playing = useMemo(() => mainCards.filter(c => c.status === 'playing'), [mainCards]);
   const reserved = useMemo(() => mainCards.filter(c => c.status === 'reserved'), [mainCards]);
   const played = useMemo(() => mainCards.filter(c => c.status === 'played'), [mainCards]);
-  const handCards = useMemo(() => [...playing, ...reserved], [playing, reserved]);
 
   const filteredPlaying = activeTab === 'playing' ? playing : [];
   const filteredReserved = activeTab === 'reserved' ? reserved : [];
@@ -59,6 +58,8 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
     );
   }
 
+  const allEmpty = playing.length === 0 && reserved.length === 0 && played.length === 0;
+
   return (
     <div className="deck-layout">
       <div className="deck-main">
@@ -76,27 +77,38 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
 
         <div className="deck-sections">
           {activeTab === 'all' ? (
-            <>
-              {played.length > 0 && (
-                <section className="deck-zone deck-zone--table">
-                  <h2 className="deck-zone-label">On the Table</h2>
-                  <div className="card-row card-row--table">
-                    {played.map((card, i) => renderCard(card, i, getTableRotation(i)))}
-                  </div>
-                </section>
-              )}
+            allEmpty ? (
+              <p className="deck-empty">No cards yet. Add one to get started.</p>
+            ) : (
+              <>
+                {playing.length > 0 && (
+                  <section className="deck-zone deck-zone--table">
+                    <h2 className="deck-zone-label">On the Table</h2>
+                    <div className="card-row card-row--table">
+                      {playing.map((card, i) => renderCard(card, i, getTableRotation(i)))}
+                    </div>
+                  </section>
+                )}
 
-              {handCards.length > 0 ? (
-                <section className="deck-zone deck-zone--hand">
-                  <h2 className="deck-zone-label">In Hand</h2>
-                  <div className="card-row card-row--hand">
-                    {handCards.map((card, i) => renderCard(card, i))}
-                  </div>
-                </section>
-              ) : (
-                !played.length && <p className="deck-empty">No cards yet. Add one to get started.</p>
-              )}
-            </>
+                {reserved.length > 0 && (
+                  <section className="deck-zone deck-zone--hand">
+                    <h2 className="deck-zone-label">In Hand</h2>
+                    <div className="card-row card-row--hand">
+                      {reserved.map((card, i) => renderCard(card, i))}
+                    </div>
+                  </section>
+                )}
+
+                {played.length > 0 && (
+                  <section className="deck-zone deck-zone--played">
+                    <h2 className="deck-zone-label">Played</h2>
+                    <div className="card-row">
+                      {played.map((card, i) => renderCard(card, i))}
+                    </div>
+                  </section>
+                )}
+              </>
+            )
           ) : (
             <>
               {filteredPlaying.length > 0 && (
@@ -129,16 +141,16 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
             </>
           )}
         </div>
-      </div>
 
-      {resourceCards.length > 0 && (
-        <aside className="deck-resources">
-          <h2 className="deck-section-label">Resources</h2>
-          <div className="card-row card-row--compact">
-            {resourceCards.map((card, i) => renderCard(card, i))}
-          </div>
-        </aside>
-      )}
+        {resourceCards.length > 0 && (
+          <section className="deck-zone deck-zone--resources">
+            <h2 className="deck-zone-label">Resources</h2>
+            <div className="card-row">
+              {resourceCards.map((card, i) => renderCard(card, i))}
+            </div>
+          </section>
+        )}
+      </div>
     </div>
   );
 }
