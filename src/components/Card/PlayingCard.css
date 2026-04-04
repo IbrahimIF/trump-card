@@ -271,10 +271,10 @@
 
 /* ─── On-table fan effect ───────────────────────────────────────────────── */
 
-/* Two-class specificity to beat .playing-card.status-playing */
+/* Two-class specificity to beat .playing-card.status-playing transform.
+   No opacity override — status CSS controls that (played = greyed, playing = full). */
 .playing-card.card--on-table {
   transform: rotate(calc(var(--table-rotation, 0) * 1deg));
-  opacity: 0.85;
 }
 
 .playing-card.card--on-table:hover {

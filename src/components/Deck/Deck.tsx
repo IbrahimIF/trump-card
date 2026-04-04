@@ -29,12 +29,15 @@ function getTableRotation(index: number): number {
 
 export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onStatusChange, onRemove }: DeckProps) {
   const [activeTab, setActiveTab] = useState<FilterTab>('all');
+  const [resourcePanelOpen, setResourcePanelOpen] = useState(false);
 
   const resourceCards = useMemo(() => cards.filter(c => c.type === 'resource'), [cards]);
   const mainCards = useMemo(() => cards.filter(c => c.type !== 'resource'), [cards]);
   const playing = useMemo(() => mainCards.filter(c => c.status === 'playing'), [mainCards]);
   const reserved = useMemo(() => mainCards.filter(c => c.status === 'reserved'), [mainCards]);
   const played = useMemo(() => mainCards.filter(c => c.status === 'played'), [mainCards]);
+  // Table = in-play (active, full opacity) + played (greyed) — playing cards first
+  const tableCards = useMemo(() => [...playing, ...played], [playing, played]);
 
   const filteredPlaying = activeTab === 'playing' ? playing : [];
   const filteredReserved = activeTab === 'reserved' ? reserved : [];
@@ -58,7 +61,7 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
     );
   }
 
-  const allEmpty = playing.length === 0 && reserved.length === 0 && played.length === 0;
+  const allEmpty = tableCards.length === 0 && reserved.length === 0;
 
   return (
     <div className="deck-layout">
@@ -73,6 +76,14 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
               {TAB_LABELS[tab]}
             </button>
           ))}
+          {resourceCards.length > 0 && (
+            <button
+              className="deck-tab resources-toggle"
+              onClick={() => setResourcePanelOpen(v => !v)}
+            >
+              Resources
+            </button>
+          )}
         </div>
 
         <div className="deck-sections">
@@ -81,11 +92,11 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
               <p className="deck-empty">No cards yet. Add one to get started.</p>
             ) : (
               <>
-                {playing.length > 0 && (
+                {tableCards.length > 0 && (
                   <section className="deck-zone deck-zone--table">
                     <h2 className="deck-zone-label">On the Table</h2>
                     <div className="card-row card-row--table">
-                      {playing.map((card, i) => renderCard(card, i, getTableRotation(i)))}
+                      {tableCards.map((card, i) => renderCard(card, i, getTableRotation(i)))}
                     </div>
                   </section>
                 )}
@@ -95,15 +106,6 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
                     <h2 className="deck-zone-label">In Hand</h2>
                     <div className="card-row card-row--hand">
                       {reserved.map((card, i) => renderCard(card, i))}
-                    </div>
-                  </section>
-                )}
-
-                {played.length > 0 && (
-                  <section className="deck-zone deck-zone--played">
-                    <h2 className="deck-zone-label">Played</h2>
-                    <div className="card-row">
-                      {played.map((card, i) => renderCard(card, i))}
                     </div>
                   </section>
                 )}
@@ -141,16 +143,31 @@ export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onSta
             </>
           )}
         </div>
+      </div>
 
-        {resourceCards.length > 0 && (
-          <section className="deck-zone deck-zone--resources">
-            <h2 className="deck-zone-label">Resources</h2>
-            <div className="card-row">
+      {resourceCards.length > 0 && (
+        <>
+          <aside className={`deck-resources${resourcePanelOpen ? ' deck-resources--open' : ''}`}>
+            <div className="deck-resources-header">
+              <h2 className="deck-section-label">Resources</h2>
+              <button
+                className="resources-close"
+                onClick={() => setResourcePanelOpen(false)}
+                aria-label="Close resources"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="deck-resources-cards">
               {resourceCards.map((card, i) => renderCard(card, i))}
             </div>
-          </section>
-        )}
-      </div>
+          </aside>
+
+          {resourcePanelOpen && (
+            <div className="resources-backdrop" onClick={() => setResourcePanelOpen(false)} />
+          )}
+        </>
+      )}
     </div>
   );
 }
