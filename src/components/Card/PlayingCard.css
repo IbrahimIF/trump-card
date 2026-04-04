@@ -269,6 +269,32 @@
   color: #fff;
 }
 
+/* ─── Shuffle animation ─────────────────────────────────────────────────── */
+
+@keyframes card-shuffle {
+  0%   { transform: translateY(0) rotate(0deg); }
+  35%  { transform: translateY(-28px) rotate(calc((var(--card-idx, 0) * 4deg) - 8deg)); }
+  65%  { transform: translateY(-18px) rotate(calc((var(--card-idx, 0) * 2deg) - 4deg)); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+.card--shuffling {
+  animation: card-shuffle 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation-delay: calc(var(--card-idx, 0) * 35ms);
+}
+
+/* Don't double-stack with the status-playing translateY */
+.card--shuffling.status-playing {
+  animation-name: card-shuffle-playing;
+}
+
+@keyframes card-shuffle-playing {
+  0%   { transform: translateY(-20px) rotate(0deg); }
+  35%  { transform: translateY(-48px) rotate(calc((var(--card-idx, 0) * 4deg) - 8deg)); }
+  65%  { transform: translateY(-38px) rotate(calc((var(--card-idx, 0) * 2deg) - 4deg)); }
+  100% { transform: translateY(-20px) rotate(0deg); }
+}
+
 /* ─── Status dot ────────────────────────────────────────────────────────── */
 
 .card-status-dot {

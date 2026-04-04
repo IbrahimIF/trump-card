@@ -16,6 +16,14 @@ function App() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [allFlipped, setAllFlipped] = useState(false);
   const [feltBg, setFeltBg] = useState(() => localStorage.getItem('trump-card-felt') === 'true');
+  const [isShuffling, setIsShuffling] = useState(false);
+
+  function handleShuffle() {
+    if (isShuffling) return;
+    setIsShuffling(true);
+    deck.shuffle();
+    setTimeout(() => setIsShuffling(false), 700);
+  }
 
   function toggleFelt() {
     setFeltBg(prev => {
@@ -49,7 +57,7 @@ function App() {
             {!shared && (
               <>
                 <button className="btn btn-ghost" onClick={() => { deck.flipAll(!allFlipped); setAllFlipped(f => !f); }}>Flip All</button>
-                <button className="btn btn-ghost" onClick={deck.shuffle}>Shuffle</button>
+                <button className="btn btn-ghost" onClick={handleShuffle}>Shuffle</button>
                 <button className="btn btn-ghost" onClick={toggleFelt} title="Toggle background">{feltBg ? '⬜' : '🟩'}</button>
                 <ShareButton cards={deck.cards} />
                 <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>+ New Card</button>
@@ -68,6 +76,7 @@ function App() {
         <Deck
           cards={cards}
           isAdmin={!shared}
+          isShuffling={isShuffling}
           onFlip={!shared ? deck.flipCard : undefined}
           onStatusChange={!shared ? deck.setStatus : undefined}
           onRemove={!shared ? deck.removeCard : undefined}

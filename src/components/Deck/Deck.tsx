@@ -8,6 +8,7 @@ type FilterTab = 'all' | 'reserved' | 'playing' | 'played';
 interface DeckProps {
   cards: Card[];
   isAdmin?: boolean;
+  isShuffling?: boolean;
   onFlip?: (id: string) => void;
   onStatusChange?: (id: string, status: CardStatus, note?: string) => void;
   onRemove?: (id: string) => void;
@@ -20,7 +21,7 @@ const TAB_LABELS: Record<FilterTab, string> = {
   played: 'Played',
 };
 
-export function Deck({ cards, isAdmin = true, onFlip, onStatusChange, onRemove }: DeckProps) {
+export function Deck({ cards, isAdmin = true, isShuffling = false, onFlip, onStatusChange, onRemove }: DeckProps) {
   const [activeTab, setActiveTab] = useState<FilterTab>('all');
 
   const resourceCards = useMemo(() => cards.filter(c => c.type === 'resource'), [cards]);
@@ -36,12 +37,14 @@ export function Deck({ cards, isAdmin = true, onFlip, onStatusChange, onRemove }
 
   const tabs: FilterTab[] = ['all', 'reserved', 'playing', 'played'];
 
-  function renderCard(card: Card) {
+  function renderCard(card: Card, index: number) {
     return (
       <PlayingCard
         key={card.id}
         card={card}
         isAdmin={isAdmin}
+        isShuffling={isShuffling}
+        shuffleIndex={index}
         onFlip={onFlip}
         onStatusChange={onStatusChange}
         onRemove={onRemove}
