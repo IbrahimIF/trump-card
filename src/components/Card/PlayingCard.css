@@ -14,6 +14,12 @@
   z-index: 20;
 }
 
+/* Resource sidebar — popover flips to the left so it doesn't go off-screen */
+.card-row--compact .card-actions-popover {
+  left: auto;
+  right: calc(100% + 8px);
+}
+
 .card-actions-backdrop {
   position: fixed;
   inset: 0;

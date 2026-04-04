@@ -154,7 +154,7 @@
   }
 
   .card-row--compact .playing-card {
-    width: auto !important;
+    width: var(--card-w) !important;
     height: var(--card-h) !important;
   }
 
